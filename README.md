@@ -77,7 +77,7 @@ The project is configured for execution on Arm Virtual Hardware which removes th
 - When using VHT_MPS2_Cortex-M3, you may execute it with the command:
 
   ```bash
-  VHT_MPS2_Cortex-M3 -f vht-config.txt -a ./Objects/AVH.axf
+  VHT_MPS2_Cortex-M3 -a ./Objects/Hello_freertos+AVH.axf
   ```
 
 >**Note:** Arm Virtual Hardware models are also available on AWS Marketplace.

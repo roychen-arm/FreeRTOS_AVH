@@ -31,7 +31,6 @@ solution:
             - -std=c99
           Link:
             - --strict
-      optimize: none
       processor:
         endian: little
         fpu: "off"
