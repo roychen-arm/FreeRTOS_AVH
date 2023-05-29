@@ -1,0 +1,39 @@
+solution:
+  packs:
+    - pack: Keil::V2M-MPS2_DSx_BSP
+    - pack: ARM::CMSIS-FreeRTOS
+    - pack: ARM::CMSIS
+    - pack: Keil::ARM_Compiler
+    - pack: Keil::MDK-Middleware
+
+  projects:
+    - project: Hello_freertos.cproject.yml
+
+
+  output-dirs:
+    outdir: ./Objects
+
+  target-types:
+    - compiler: AC6
+      define:
+        - __USE_LCD
+        - __USE_FPGA
+      device: DS_CM3
+      misc:
+        - ASM:
+            - -masm=auto
+          C-CPP:
+            - -fno-rtti
+            - -funsigned-char
+            - -fshort-enums
+            - -fshort-wchar
+            - -ffunction-sections
+            - -std=c99
+          Link:
+            - --strict
+      optimize: none
+      processor:
+        endian: little
+        fpu: "off"
+        trustzone: non-secure
+      type: AVH

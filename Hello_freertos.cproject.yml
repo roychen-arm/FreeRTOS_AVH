@@ -1,0 +1,22 @@
+project:
+  groups:
+    - files:
+        - file: Hello_freertos.c
+      group: Source Files
+    - files:
+        - file: V2M-MPS2.sct
+      group: Scatter File
+
+  components:
+    - component: ARM::RTOS&FreeRTOS:Config&CMSIS RTOS2
+    - component: ARM::RTOS&FreeRTOS:Core&Cortex-M
+    - component: ARM::RTOS&FreeRTOS:Event Groups
+    - component: ARM::RTOS&FreeRTOS:Heap&Heap_4
+    - component: ARM::RTOS&FreeRTOS:Timers
+    - component: ARM::CMSIS:CORE
+    - component: ARM::CMSIS:RTOS2:FreeRTOS&Cortex-M
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&DAP
+    - component: Keil::Board Support&V2M-MPS2:Buttons
+    - component: Keil::Board Support&V2M-MPS2:Graphic LCD
+    - component: Keil::Board Support&V2M-MPS2:LED
+    - component: Keil::Device:Startup
