@@ -33,7 +33,6 @@ volatile int32_t delay_val = 500;
 
 osThreadId_t tid_thrLED;                /* Thread id of thread: LED */
 osThreadId_t tid_thrBUT;                /* Thread id of thread: BUT */
-osThreadId_t tid_thrLCD;                /* Thread id of thread: LCD */
 
 osMutexId_t mut_GLCD;                   /* Mutex to control GLCD access */
 
@@ -93,37 +92,6 @@ void LED_OffLCD (uint32_t ledNum) {
   GLCD_DrawChar((9+ledNum)*16, 6*24, 0x80+0);     /* Circle empty */
   osMutexRelease(mut_GLCD);
 #endif
-}
-
-/*----------------------------------------------------------------------------
-  thrLED: display message on GLCD
- *----------------------------------------------------------------------------*/
-void thrLCD(void *argument) {
-
-  for (;;) {
-    osMutexAcquire(mut_GLCD, osWaitForever);
-#ifdef __USE_LCD
-  GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);
-  GLCD_SetForegroundColor(GLCD_COLOR_WHITE);
-  GLCD_DrawString(0*16, 0*24, "   V2M-MPS2 Demo    ");
-  GLCD_DrawString(0*16, 1*24, "      Blinky        ");
-  GLCD_DrawString(0*16, 2*24, "   DesignStart      ");
-#endif
-    osMutexRelease(mut_GLCD);
-    osDelay(4000);
-
-    osMutexAcquire(mut_GLCD, osWaitForever);
-#ifdef __USE_LCD
-  GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);
-  GLCD_SetForegroundColor(GLCD_COLOR_RED);
-  GLCD_DrawString(0*16, 0*24, "   V2M-MPS2 Demo    ");
-  GLCD_DrawString(0*16, 1*24, "      Blinky        ");
-  GLCD_DrawString(0*16, 2*24, "   DesignStart      ");
-#endif
-    osMutexRelease(mut_GLCD);
-    osDelay(4000);
-  }
-
 }
 
 /*----------------------------------------------------------------------------
@@ -200,7 +168,6 @@ void app_main (void *argument) {
 
   tid_thrBUT = osThreadNew (thrBUT, NULL, NULL);               /* create BUT thread */
   tid_thrLED = osThreadNew (thrLED, NULL, NULL);               /* create LED thread */
-  tid_thrLCD = osThreadNew (thrLCD, NULL, NULL);               /* create LCD thread */
 
   for (;;) {}
 }
@@ -239,15 +206,6 @@ int main (void) {
   GLCD_SetBackgroundColor(GLCD_COLOR_WHITE);
   GLCD_SetForegroundColor(GLCD_COLOR_BLACK);
   switch ((SCB->CPUID >> 4) & 0xFFF) {
-    case 0xC20:
-      GLCD_DrawString(0*16, 4*24, "   ARM Cortex-M0    ");
-      break;
-    case 0xC60:
-      GLCD_DrawString(0*16, 4*24, "   ARM Cortex-M0+   ");
-      break;
-    case 0xC21:
-      GLCD_DrawString(0*16, 4*24, "   ARM Cortex-M1    ");
-      break;
     case 0xC23:
       GLCD_DrawString(0*16, 4*24, "   ARM Cortex-M3    ");
       break;
